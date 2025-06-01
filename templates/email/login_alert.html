@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Уведомление о входе</title>
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f0f0f;
+            color: #fff;
+            padding: 40px;
+            margin: 0;
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            margin: 6px 0;
+        }
+        hr {
+            margin: 30px 0;
+            border: none;
+            border-top: 1px solid #333;
+        }
+        .code-box {
+            font-size: 28px;
+            font-weight: bold;
+            background: #111;
+            padding: 14px 24px;
+            display: inline-block;
+            margin: 20px 0;
+            border-radius: 8px;
+            letter-spacing: 3px;
+        }
+    </style>
+</head>
+<body style="font-family: Montserrat, sans-serif; background-color: #0f0f0f; color: #fff; padding: 40px;">
+    <h2>🚨 Новый вход в аккаунт</h2>
+    <p>Пользователь: <strong>{{ username }}</strong></p>
+    <p>Дата и время входа: <strong>{{ time }}</strong></p>
+    <p>IP-адрес: <strong>{{ ip }}</strong></p>
+    <p>ОС и браузер: <strong>{{ user_agent }}</strong></p>
+
+    {% if code %}
+    <hr style="margin: 30px 0; border: none; border-top: 1px solid #333;">
+    <h3>Ваш код подтверждения</h3>
+    <div style="font-size: 28px; font-weight: bold; background: #111; padding: 14px 24px; display: inline-block; margin: 20px 0; border-radius: 8px;">
+        {{ code }}
+    </div>
+    {% endif %}
+
+    <p>Если это были не вы — <strong>немедленно измените пароль</strong>.</p>
+    
+</body>
+</html>

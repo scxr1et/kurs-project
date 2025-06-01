@@ -1,0 +1,82 @@
+<style>
+    body {
+        background-color: #0f0f0f;
+        font-family: 'Montserrat', sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #fff;
+    }
+
+    form {
+        background-color: #1a1a1a;
+        padding: 36px 32px;
+        border-radius: 16px;
+        box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        max-width: 420px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 24px;
+        text-align: left;
+        font-weight: 600;
+        color: #f0f0f0;
+    }
+
+    input {
+        padding: 14px 16px;
+        border-radius: 12px;
+        border: 1px solid #333;
+        font-size: 16px;
+        background-color: #111;
+        color: #fff;
+        margin-bottom: 20px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: #555;
+        background-color: #1f1f1f;
+    }
+
+    button {
+        padding: 14px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #ff0040, #8f0aff);
+        color: #fff;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: opacity 0.2s;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    p {
+        font-size: 14px;
+        text-align: left;
+        margin: 0 0 10px;
+        color: #ff5f5f;
+    }
+</style>
+
+
+
+<form method="post">
+    {% csrf_token %}
+    <h3>Введите код двухфакторной аутентификации</h3>
+    {% if error %}<p style="color:red">{{ error }}</p>{% endif %}
+    <input type="text" name="code" maxlength="6" placeholder="000000">
+    <button type="submit">Подтвердить</button>
+</form>

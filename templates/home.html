@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Главная</title>
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="home-wrapper">
+
+        <!-- Шапка -->
+        <div class="home-header">
+            <h2>{{ user.username }}</h2>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn logout">Выйти</button>
+            </form>
+        </div>
+
+        <!-- Инфо -->
+        <div class="home-section">
+            <h3>Пользовательская информация</h3>
+            <form method="post">
+                {% csrf_token %}
+
+                <label>Имя:</label>
+                <input type="text" name="first_name" value="{{ user.first_name }}">
+
+                <label>Фамилия:</label>
+                <input type="text" name="last_name" value="{{ user.last_name }}">
+
+                <label>Почта:</label>
+                <input type="email" name="email" value="{{ user.email }}">
+
+                <label>Телефон:</label>
+                <input type="tel" name="phone_number" id="phoneInput" maxlength="18" placeholder="+7 (___) ___-__-__" value="{{ user.phone_number }}">
+
+                <button type="submit" class="btn save">Сохранить</button>
+            </form>
+        </div>
+
+        <!-- Логи -->
+        <div class="home-section">
+            <h3>Безопасность</h3>
+            <a href="{% url 'login_attempts' %}" class="btn secondary">Логи входа</a>
+        </div>
+
+    </div>
+
+<script>
+    const phoneInput = document.getElementById("phoneInput");
+
+    phoneInput.addEventListener("input", function (e) {
+        let value = e.target.value.replace(/\D/g, "").substring(0, 11);
+        let formatted = "+7 ";
+
+        if (value.length > 1) {
+            formatted += "(" + value.substring(1, 4);
+        }
+        if (value.length >= 4) {
+            formatted += ") " + value.substring(4, 7);
+        }
+        if (value.length >= 7) {
+            formatted += "-" + value.substring(7, 9);
+        }
+        if (value.length >= 9) {
+            formatted += "-" + value.substring(9, 11);
+        }
+
+        e.target.value = formatted;
+    });
+</script>
+
+</body>
+</html>

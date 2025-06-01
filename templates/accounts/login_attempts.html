@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>История входов в аккаунт</title>
+    <link rel="stylesheet" href="{% static 'css/login_attempts.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <h2>История входов в аккаунт</h2>
+    
+    <a href="{% url 'home' %}" class="back-btn fixed-home">← На главную</a>
+    
+    <div class="logs-container" id="logs-body"></div>
+</body>
+
+<script>
+function updateLogs() {
+    fetch("{% url 'login_attempts_json' %}")
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById('logs-body');
+            container.innerHTML = '';
+            data.logs.forEach(log => {
+                const card = document.createElement('div');
+                card.classList.add('log-card');
+
+                card.innerHTML = `
+                    <div class="log-info">
+                        <div><strong>Время:</strong> ${log.timestamp}</div>
+                        <div><strong>Логин:</strong> ${log.username}</div>
+                        <div><strong>IP:</strong> ${log.ip_address}</div>
+                        <div><strong>Страна:</strong> ${log.country}</div>
+                    </div>
+                    <div class="log-action">
+                        <div class="status ${log.successful ? 'success' : 'fail'}">
+                            ${log.successful ? 'Успешно' : 'Неудачно'}
+                        </div>
+                        <a href="/block-ip/${log.ip_address}/" class="block-btn">Заблокировать IP</a>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+        });
+}
+
+setInterval(updateLogs, 10000);
+window.onload = updateLogs;
+</script>
+
+
+
+
+</html>
